@@ -103,22 +103,23 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 #     )
 # }
 
+# Database configuration - Simplified and fixed
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', cast=int),
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', 
+                      default='postgresql://postgres:admin@localhost:5432/event_management'),
+        conn_max_age=600
+    )
 }
 
-# For Render Database URL
-DATABASES['default'] = dj_database_url.config(
-    default=config('DATABASE_URL_RENDER', default=None),
-    conn_max_age=600
-)
+# Render specific settings
+if 'RENDER' in os.environ:
+    DEBUG = False
+    ALLOWED_HOSTS = ['event-management-system-assignment3-1.onrender.com']
+    # Static files settings for Render
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 
 
