@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'event_management.sqlite3',
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://event_managementdb_jxf6_user:dTz3jsvKicxQCvtvvk6K4C7wdSPpvseh@dpg-cvhrh9qqgecs73d40bng-a.oregon-postgres.render.com/event_managementdb_jxf6',
+        conn_max_age=600
+    )
 }
-
 
 
 
@@ -139,5 +139,5 @@ EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')  
-FRONTEND_URL = 'https://event-management-system-assignment3-1.onrender.com'
+FRONTEND_URL = ''
 LOGIN_URL = 'sign-in'
