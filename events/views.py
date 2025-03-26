@@ -19,7 +19,8 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DeleteView,ListView,DetailView,TemplateView,View
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseForbidden
 
 User = get_user_model()
 def is_organizer(user):
@@ -30,19 +31,21 @@ def is_participant(user):
 # create_decorator=[login_required,permission_required("is_organizer",login_url='no-permission')]
 # @method_decorator(create_decorator,name="dispatch")
 
-class Organizer_Dashboard(LoginRequiredMixin, PermissionRequiredMixin,TemplateView):
+class Organizer_Dashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'dashboard/organizer_dashboard.html'
-    permission_required = 'is_organizer'
     login_url = 'no-permission'
 
-    def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        categories = Category.objects.all()  
-        event = Event.objects.all()
+    def test_func(self):
+        return self.request.user.groups.filter(name='Organizer').exists()
 
-        type = self.request.GET.get('type', 'all')
+    def handle_no_permission(self):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
         today = date.today()
-        all_events = Event.objects.all()  
+        all_events = Event.objects.all()
         pubs = User.objects.aggregate(unique_count=Count('id', distinct=True))['unique_count']
         counts = Event.objects.aggregate(
             total=Count('id'),
@@ -51,8 +54,9 @@ class Organizer_Dashboard(LoginRequiredMixin, PermissionRequiredMixin,TemplateVi
             past_events=Count('id', filter=Q(date__lt=today))
         )
 
+        type = self.request.GET.get('type', 'all')
         base_query = Event.objects.prefetch_related('participants').select_related('category')
-        
+
         if type == 'today_events':
             events = base_query.filter(date=today)
         elif type == 'upcoming_events':
@@ -63,17 +67,15 @@ class Organizer_Dashboard(LoginRequiredMixin, PermissionRequiredMixin,TemplateVi
             events = User.objects.filter(rsvp_events__isnull=False).distinct()
         else:
             events = base_query.all()
-        context = {
+
+        context.update({
             'events': events,
             'counts': counts,
-            'pubs':pubs,
-            'all_events': all_events, 
+            'pubs': pubs,
+            'all_events': all_events,
             'today': today,
             'categories': categories,
-            'event':event,
-            
-        }
-
+        })
         return context
     
 @user_passes_test(is_organizer,login_url='no-permission')
