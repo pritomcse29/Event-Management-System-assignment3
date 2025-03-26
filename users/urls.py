@@ -1,0 +1,22 @@
+from django.urls import path
+from django.contrib.auth.views import LogoutView,PasswordChangeDoneView
+from users.views import EditProfileView,CustomPasswordResetView,CustomPasswordResetConfirmView,ChangePasswordChangeView,user_profile,register,sign_in,sign_out,admin_dashboard,assign_role,create_group,view_group,activate_user
+urlpatterns = [
+   path('register/',register,name='register'),
+   path('sign-in/',sign_in,name='sign-in'),
+   path('sign-out/',sign_out,name='sign-out'),
+   path('admin-dashboard/',admin_dashboard,name='admin-dashboard'),
+   path('activate/<int:user_id>/<str:token>/', activate_user,name='activate-user'),
+   path('admin/<int:user_id>/assign-role/',assign_role,name='assign-role'),
+   path('admin/create-group/',create_group,name='create-group'),
+   path('admin/view-group/',view_group,name='view-group'),
+   path('accounts/profile/',user_profile.as_view(),name='profile'),
+   path('password-change/', ChangePasswordChangeView.as_view(), name='password_change'),
+   path('password-change/done/', PasswordChangeDoneView.as_view(
+        template_name='accounts/password_change_done.html'), name='password_change_done'),
+
+   path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+   path('password-reset/confirm/<uidb64>/<token>/',
+         CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+   path('edit-profile/',EditProfileView.as_view(),name='edit_profile')
+]

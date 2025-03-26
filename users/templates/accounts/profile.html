@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filter %}
+{% block content %}
+
+    
+    <div class="mt-10">
+        <div class="grid grid-cols-12 gap-6 container mx-auto p-4">
+            <!-- Profile Card -->
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4 bg-white p-6 rounded-xl shadow-md">
+                <div class="flex flex-col items-center">
+                    <img class="w-24 h-24 rounded-full object-cover border-2 border-gray-300" 
+                         src="{{profile_image.url}}" 
+                         alt="Profile Image">
+                    <p class="mt-4 text-center font-semibold text-lg text-gray-800">{{name}}</p>
+                </div>
+                
+                <div class="flex justify-between mt-6 border-t pt-4">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"><a href="{% url 'edit_profile' %}" >Edit Profile</a></button>
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"><a href="{% url 'password_change' %}" >Change Password</a></button>
+                </div>
+            </div>
+            
+            <!-- User Details -->
+            <div class="col-span-12 sm:col-span-6 lg:col-span-8 bg-white p-6 rounded-xl shadow-md">
+                <h1 class="text-2xl font-semibold text-gray-800 border-b pb-2">User Profile</h1>
+
+                <div class="mt-4 space-y-3">
+                    <div>
+                        <h2 class="text-lg font-medium text-gray-700">Bio</h2>
+                        <p class="text-gray-600 text-sm"> {{bio}}</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-gray-700">
+                        <p><strong>Username:</strong> {{username}}</p>
+                        <p><strong>Email:</strong>{{email}}</p>
+                        <p><strong>Phone:</strong>{{phone_number}}</p>
+                        <p><strong>Last Login:</strong>{{last_login|humanized_date}}</p>
+                        <p><strong>Account Created:</strong>{{member_since|humanized_date}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+{% endblock content %}
+</body>
+</html>
