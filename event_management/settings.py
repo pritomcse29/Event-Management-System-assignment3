@@ -85,50 +85,9 @@ DATABASES = {
 }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('DB_NAME',default=''),
-#         'USER': config('DB_USER',default=''),
-#         'PASSWORD': config('DB_PASSWORD',default=''),
-#         'HOST': config('DB_HOST',default='localhost'),
-#         'PORT': config('DB_PORT', cast=int)
-#     }
-# }
-
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=config('DATABASE_URL_RENDER', default=''),
-#         conn_max_age=600
-#     )
-# }
-
-# Database configuration - Simplified and fixed
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=config('DATABASE_URL', 
-#                       default='postgresql://postgres:admin@localhost:5432/event_management'),
-#         conn_max_age=600
-#     )
-# }
-
-# # Render specific settings
-# if 'RENDER' in os.environ:
-#     DEBUG = False
-#     ALLOWED_HOSTS = ['event-management-system-assignment3-1.onrender.com']
-#     # Static files settings for Render
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-#     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=config('DATABASE_URL_LOCAL'), 
-#         alternate=config('DATABASE_URL_RENDER', default=None)  
-#     )
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
