@@ -18,6 +18,7 @@ from users.views import is_admin
 from django.contrib.auth import get_user_model
 from django.views.generic import DeleteView,ListView,DetailView,TemplateView,View
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
 User = get_user_model()
 def is_organizer(user):
@@ -25,6 +26,8 @@ def is_organizer(user):
 def is_participant(user):
     return user.groups.filter(name='User').exists()
 
+create_decorator=[login_required,permission_required("is_organizer",login_url='no-permission')]
+@method_decorator(create_decorator,name="dispatch")
 class Organizer_Dashboard(TemplateView):
     template_name = 'dashboard/organizer_dashboard.html'
     def get_context_data(self, **kwargs):
@@ -282,7 +285,7 @@ def detail_page(request,id):
      event = Event.objects.get(id=id)
 
      return render(request,'detail_page.html',{'event':event})
-
+@method_decorator(login_required, name='dispatch')
 class Detail_Page(ListView):
     model = Event
     template_name = 'detail_page.html'
@@ -299,7 +302,7 @@ def delete_event(request,id):
       return redirect('dashboard')
     else:
       return redirect('dashboard')
-    
+@method_decorator(login_required, name='dispatch') 
 class Delete_Event_View(DeleteView):
     model = Event
     def get_success_url(self):
@@ -330,6 +333,7 @@ def event_details(request):
         'search_query': search_query,  
     }
     return render(request, 'event_details.html', context)
+@method_decorator(login_required, name='dispatch')
 class EventDetailsView(ListView):
     model = Event
     template_name = 'event_details.html'
