@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'event_management.sqlite3',
+    }
+}
 
 
 # DATABASES = {
@@ -104,22 +104,22 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # }
 
 # Database configuration - Simplified and fixed
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', 
-                      default='postgresql://postgres:admin@localhost:5432/event_management'),
-        conn_max_age=600
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL', 
+#                       default='postgresql://postgres:admin@localhost:5432/event_management'),
+#         conn_max_age=600
+#     )
+# }
 
-# Render specific settings
-if 'RENDER' in os.environ:
-    DEBUG = False
-    ALLOWED_HOSTS = ['event-management-system-assignment3-1.onrender.com']
-    # Static files settings for Render
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+# # Render specific settings
+# if 'RENDER' in os.environ:
+#     DEBUG = False
+#     ALLOWED_HOSTS = ['event-management-system-assignment3-1.onrender.com']
+#     # Static files settings for Render
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 
 
