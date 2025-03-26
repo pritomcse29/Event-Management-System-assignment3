@@ -139,5 +139,5 @@ EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')  
-FRONTEND_URL = ''
+FRONTEND_URL = 'https://event-management-system-assignment3-3.onrender.com'
 LOGIN_URL = 'sign-in'
