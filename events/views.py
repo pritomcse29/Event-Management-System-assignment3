@@ -19,6 +19,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DeleteView,ListView,DetailView,TemplateView,View
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 User = get_user_model()
 def is_organizer(user):
@@ -26,9 +27,13 @@ def is_organizer(user):
 def is_participant(user):
     return user.groups.filter(name='User').exists()
 
-create_decorator=[login_required,permission_required("is_organizer",login_url='no-permission')]
-@method_decorator(create_decorator,name="dispatch")
-class Organizer_Dashboard(TemplateView):
+# create_decorator=[login_required,permission_required("is_organizer",login_url='no-permission')]
+# @method_decorator(create_decorator,name="dispatch")
+
+class Organizer_Dashboard(LoginRequiredMixin, PermissionRequiredMixin,TemplateView):
+    template_name = 'dashboard/organizer_dashboard.html'
+    permission_required = 'is_organizer'
+    login_url = 'no-permission'
     template_name = 'dashboard/organizer_dashboard.html'
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
@@ -119,7 +124,7 @@ def organizer_dashboard(request):
     }
 
     return render(request, 'dashboard/organizer_dashboard.html', context)
-
+@method_decorator(login_required, name='dispatch')
 class CreateEventView(View):
     template_name = 'dashboard/create_event.html'
 
