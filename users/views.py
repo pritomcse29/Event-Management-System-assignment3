@@ -18,6 +18,7 @@ from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
 User = get_user_model()
 # from users.models import UserProfile
 # Create your views here.
@@ -100,7 +101,7 @@ def create_group(request):
 def view_group(request):
     groups = Group.objects.all()
     return render(request,'admin/group_list.html',{'groups':groups})
-
+@method_decorator(login_required, name='dispatch')
 class user_profile(TemplateView):
     template_name = 'accounts/profile.html'
     def get_context_data(self, **kwargs):
@@ -147,7 +148,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         messages.success(
             self.request, 'Password reset successfully')
         return super().form_valid(form)
-
+@method_decorator(login_required, name='dispatch')
 class EditProfileView(UpdateView):
      model = User
      form_class = EditProfileForm

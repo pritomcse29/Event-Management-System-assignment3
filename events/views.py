@@ -18,6 +18,9 @@ from users.views import is_admin
 from django.contrib.auth import get_user_model
 from django.views.generic import DeleteView,ListView,DetailView,TemplateView,View
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseForbidden
 
 User = get_user_model()
 def is_organizer(user):
@@ -25,16 +28,24 @@ def is_organizer(user):
 def is_participant(user):
     return user.groups.filter(name='User').exists()
 
-class Organizer_Dashboard(TemplateView):
-    template_name = 'dashboard/organizer_dashboard.html'
-    def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        categories = Category.objects.all()  
-        event = Event.objects.all()
+# create_decorator=[login_required,permission_required("is_organizer",login_url='no-permission')]
+# @method_decorator(create_decorator,name="dispatch")
 
-        type = self.request.GET.get('type', 'all')
+class Organizer_Dashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'dashboard/organizer_dashboard.html'
+    login_url = 'no-permission'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Organizer').exists()
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
         today = date.today()
-        all_events = Event.objects.all()  
+        all_events = Event.objects.all()
         pubs = User.objects.aggregate(unique_count=Count('id', distinct=True))['unique_count']
         counts = Event.objects.aggregate(
             total=Count('id'),
@@ -43,8 +54,9 @@ class Organizer_Dashboard(TemplateView):
             past_events=Count('id', filter=Q(date__lt=today))
         )
 
+        type = self.request.GET.get('type', 'all')
         base_query = Event.objects.prefetch_related('participants').select_related('category')
-        
+
         if type == 'today_events':
             events = base_query.filter(date=today)
         elif type == 'upcoming_events':
@@ -55,17 +67,15 @@ class Organizer_Dashboard(TemplateView):
             events = User.objects.filter(rsvp_events__isnull=False).distinct()
         else:
             events = base_query.all()
-        context = {
+
+        context.update({
             'events': events,
             'counts': counts,
-            'pubs':pubs,
-            'all_events': all_events, 
+            'pubs': pubs,
+            'all_events': all_events,
             'today': today,
             'categories': categories,
-            'event':event,
-            
-        }
-
+        })
         return context
     
 @user_passes_test(is_organizer,login_url='no-permission')
@@ -116,7 +126,7 @@ def organizer_dashboard(request):
     }
 
     return render(request, 'dashboard/organizer_dashboard.html', context)
-
+@method_decorator(login_required, name='dispatch')
 class CreateEventView(View):
     template_name = 'dashboard/create_event.html'
 
@@ -282,7 +292,7 @@ def detail_page(request,id):
      event = Event.objects.get(id=id)
 
      return render(request,'detail_page.html',{'event':event})
-
+@method_decorator(login_required, name='dispatch')
 class Detail_Page(ListView):
     model = Event
     template_name = 'detail_page.html'
@@ -299,7 +309,7 @@ def delete_event(request,id):
       return redirect('dashboard')
     else:
       return redirect('dashboard')
-    
+@method_decorator(login_required, name='dispatch') 
 class Delete_Event_View(DeleteView):
     model = Event
     def get_success_url(self):
@@ -330,6 +340,7 @@ def event_details(request):
         'search_query': search_query,  
     }
     return render(request, 'event_details.html', context)
+@method_decorator(login_required, name='dispatch')
 class EventDetailsView(ListView):
     model = Event
     template_name = 'event_details.html'
