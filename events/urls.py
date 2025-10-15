@@ -1,5 +1,5 @@
 from django.urls import path
-from events.views import CreateEventView,Organizer_Dashboard,EventDetailsView,Detail_Page,Delete_Event_View,all_event,all_category,dashboard,event_detail,participant_dashboard,rsvp_event,organizer_dashboard, create_event, create_category, update_event, update_category, detail_page, delete_event, event_details, update_participant, activate_user, add_participant,participant_page,user_registered_events
+from events.views import CreateEventView,Organizer_Dashboard,EventDetailsView,Delete_Event_View,all_event,all_category,dashboard,event_detail,participant_dashboard,rsvp_event,organizer_dashboard, create_event, create_category, update_event, update_category, detail_page, delete_event, update_participant, activate_user, add_participant,participant_page,user_registered_events
 
 urlpatterns = [
     path('organizer-dashboard/', Organizer_Dashboard.as_view(), name='organizer-dashboard'),
@@ -12,8 +12,8 @@ urlpatterns = [
     path('update-event/<int:id>/', update_event, name='update-event'),
     path('update-category/<int:id>/', update_category, name='update-category'),
     path('update-participant/<int:id>/', update_participant, name='update-participant'),
-    path('detail_page/<int:id>/', Detail_Page.as_view(), name='detail-page'),
-    # path('detail_page/<int:id>/', detail_page, name='detail-page'),
+    # path('detail_page/<int:id>/', Detail_Page.as_view(), name='detail-page'),
+    path('detail_page/<int:id>/', detail_page, name='detail-page'),
     path('delete-event/<int:id>/', Delete_Event_View.as_view(), name='delete-event'),
     # path('delete-event/<int:id>/', delete_event, name='delete-event'),
     path('event-details/', EventDetailsView.as_view(), name='event-details'),

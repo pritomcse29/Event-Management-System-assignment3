@@ -1,8 +1,85 @@
-{% extends 'admin/admin_dashboard.html' %}
 
-{% block content %}
 
-<div class="mx-auto w-1/2 mt-8">
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventSphere - Admin</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-indigo-600  p-4 shadow-lg sticky top-0 z-50 backdrop-blur-lg bg-opacity-80">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Brand -->
+            <div class="text-2xl font-extrabold tracking-wide text-white drop-shadow-lg">
+                Event Management System
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex space-x-8 font-medium">
+                <li><a href="{% url 'admin-dashboard' %}" class="hover:text-yellow-300 transition-colors duration-300">Dashboard</a></li>
+                <li><a href="{% url 'create-group' %}" class="hover:text-yellow-300 transition-colors duration-300">Create Group</a></li>
+                <li><a href="{% url 'view-group' %}" class="hover:text-yellow-300 transition-colors duration-300">Groups</a></li>
+            </ul>
+
+            <!-- User Dropdown -->
+            <div class="relative">
+                <button id="user-icon" class="text-white text-2xl hover:scale-110 transition-transform duration-200">
+                    <i class="fas fa-circle-user"></i>
+                </button>
+                <div id="user-dropdown" class="absolute right-0 mt-3 w-56 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-lg border border-gray-700 hidden">
+                    <div class="px-4 py-3 border-b border-gray-700">
+                        <span class="text-sm font-semibold text-gray-200">Admin Actions</span>
+                    </div>
+                    <a href="{% url 'create-event' %}" class="block px-4 py-2 text-sm hover:bg-indigo-700 hover:text-white rounded-md">Add Event</a>
+                    <a href="{% url 'create-category' %}" class="block px-4 py-2 text-sm hover:bg-indigo-700 hover:text-white rounded-md">Add Category</a>
+                    <a href="{% url 'all-category' %}" class="block px-4 py-2 text-sm hover:bg-indigo-700 hover:text-white rounded-md">Category List</a>
+                    <a href="{% url 'all-event' %}" class="block px-4 py-2 text-sm hover:bg-indigo-700 hover:text-white rounded-md">Event List</a>
+                    <div class="border-t border-gray-700"></div>
+                    <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm hover:bg-indigo-700 hover:text-white rounded-md">Profile</a>
+                    <form method="post" action="{% url 'sign-out' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-600 hover:text-white rounded-md">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <ul id="mobile-menu" class="hidden flex flex-col space-y-2 mt-4 text-center bg-gray-900/95 backdrop-blur-lg rounded-xl shadow-lg p-4 md:hidden">
+            <li><a href="{% url 'admin-dashboard' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Dashboard</a></li>
+            <li><a href="{% url 'view-group' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Groups</a></li>
+            <li><a href="{% url 'create-group' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Create Group</a></li>
+            <li><a href="{% url 'create-event' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Add Event</a></li>
+            <li><a href="{% url 'create-category' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Add Category</a></li>
+            <li><a href="{% url 'all-category' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Category List</a></li>
+            <li><a href="{% url 'all-event' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Event List</a></li>
+            <li><a href="{% url 'profile' %}" class="block py-2 hover:bg-indigo-700 rounded-md">Profile</a></li>
+            <form method="post" action="{% url 'sign-out' %}">
+                {% csrf_token %}
+                <button type="submit" class="w-full text-left py-2 text-red-400 hover:bg-red-600 hover:text-white rounded-md">
+                    Logout
+                </button>
+            </form>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <!-- <main class="max-w-7xl mx-auto p-6">
+        <div class="mx-auto w-1/2 mt-8">
     <ul>
         {% for message in messages %}
         <li class="bg-green-500"> {{message}}</li>
@@ -17,7 +94,85 @@
          <button type="submit" class="bg-slate-600 text-white py-2 px-2 mt-5">Submit</button>
     </form>
 </div>
-    
-{% endblock content %}
+        
+    </main> -->
+
+    <!-- Main Content -->
+<main class="max-w-4xl mx-auto py-12 px-6">
+
+  <!-- Messages -->
+  {% if messages %}
+  <div class="space-y-3 mb-8">
+    {% for message in messages %}
+    <div class="flex items-center justify-between p-4 rounded-xl text-white shadow-md transition-all duration-300
+                {% if message.tags == 'error' %}
+                    bg-red-500
+                {% elif message.tags == 'warning' %}
+                    bg-yellow-500
+                {% elif message.tags == 'success' %}
+                    bg-green-500
+                {% else %}
+                    bg-blue-500
+                {% endif %}">
+      <span class="text-sm font-medium">{{ message }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer opacity-70 hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Form Card -->
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Submit Form</h2>
+
+    <form method="POST" class="space-y-6 text-black">
+      {% csrf_token %}
+      <div class="space-y-4">
+        {{ form.as_p }}
+      </div>
+
+      <!-- Updated button color -->
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-black font-semibold py-3 px-4 rounded-xl shadow-md transition-all duration-300">
+        Submit
+      </button>
+    </form>
+  </div>
+
+</main>
+
+
+    <!-- Script -->
+    <script>
+        const menuBtn = document.getElementById("menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const userIcon = document.getElementById("user-icon");
+        const userDropdown = document.getElementById("user-dropdown");
+
+        // Toggle mobile menu
+        menuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle("hidden");
+            userDropdown.classList.add("hidden");
+        });
+
+        // Toggle user dropdown
+        userIcon.addEventListener("click", (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle("hidden");
+            mobileMenu.classList.add("hidden");
+        });
+
+        // Click outside to close both
+        document.addEventListener("click", () => {
+            userDropdown.classList.add("hidden");
+            mobileMenu.classList.add("hidden");
+        });
+    </script>
+</body>
+</html>
+
 
     

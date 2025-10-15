@@ -76,6 +76,7 @@ def activate_user(request, user_id, token):
 @user_passes_test(is_admin,login_url='no-permission')
 def assign_role(request,user_id):
     user = User.objects.get(id=user_id)
+    
     form = AssignROleForm()
     if request.method=='POST':
         form = AssignROleForm(request.POST)

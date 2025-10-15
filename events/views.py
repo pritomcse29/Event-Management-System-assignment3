@@ -286,19 +286,19 @@ def update_category(request,id):
     
 
      return render(request,'dashboard/create_category.html',{"event_form": event_form})
-     
-
+ 
+@login_required
 def detail_page(request,id):
      event = Event.objects.get(id=id)
 
-     return render(request,'detail_page.html',{'event':event})
-@method_decorator(login_required, name='dispatch')
-class Detail_Page(ListView):
-    model = Event
-    template_name = 'detail_page.html'
-    context_object_name = 'event'
-    def get_queryset(self):
-        return Event.objects.filter(id=self.kwargs['id'])
+     return render(request,'dashboard/detail_page.html',{'event':event})
+# @method_decorator(login_required, name='dispatch')
+# class Detail_Page(ListView):
+#     model = Event
+#     template_name = 'dashboard/detail_page.html'
+#     context_object_name = 'event'
+#     def get_queryset(self):
+#         return Event.objects.filter(id=self.kwargs['id'])
 
 @login_required
 @permission_required("events.delete_event",login_url='no-permission')
@@ -326,24 +326,24 @@ class Delete_Event_View(DeleteView):
             messages.error(request,'Event not found')
         return redirect(self.get_success_url())
 
-def event_details(request):
-    search_query = request.GET.get('q', '').strip()  
+# def event_details(request):
+#     search_query = request.GET.get('q', '').strip()  
     
 
-    if search_query:
-        events = Event.objects.filter(name__icontains=search_query)
-    else:
-        events = Event.objects.all()  
+#     if search_query:
+#         events = Event.objects.filter(name__icontains=search_query)
+#     else:
+#         events = Event.objects.all()  
 
-    context = {
-        'events': events,
-        'search_query': search_query,  
-    }
-    return render(request, 'event_details.html', context)
+#     context = {
+#         'events': events,
+#         'search_query': search_query,  
+#     }
+#     return render(request, 'event_details.html', context)
 @method_decorator(login_required, name='dispatch')
 class EventDetailsView(ListView):
     model = Event
-    template_name = 'event_details.html'
+    template_name = 'dashboard/event_details.html'
     context_object_name = 'events'
 
     def get_queryset(self):

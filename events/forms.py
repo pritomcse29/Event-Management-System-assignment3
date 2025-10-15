@@ -9,12 +9,12 @@ class EventModelForm(forms.ModelForm):
         model = Event
         fields = ['name', 'description', 'date', 'time', 'location', 'category','asset']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'border rounded-md p-2 w-full mb-3'}),
-            'description': forms.Textarea(attrs={'class': 'border rounded-md p-2 w-full mb-3', 'rows': 3}),
-            'date': forms.DateInput(attrs={'type': 'date', 'class': 'border rounded-md p-2 w-full mb-3'}),
-            'time': forms.TimeInput(attrs={'type': 'time', 'class': 'border rounded-md p-2 w-full mb-3'}),
-            'location': forms.TextInput(attrs={'class': 'border rounded-md p-2 w-full mb-3'}),
-            'category': forms.Select(attrs={'class': 'border rounded-md p-2 w-full mb-3'}),
+            'name': forms.TextInput(attrs={'class': 'border rounded-md p-2 w-full mb-3 bg-white'}),
+            'description': forms.Textarea(attrs={'class': 'border rounded-md p-2 w-full mb-3 bg-white', 'rows': 3}),
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'border rounded-md p-2 w-full mb-3 bg-white'}),
+            'time': forms.TimeInput(attrs={'type': 'time', 'class': 'border rounded-md p-2 w-full mb-3 bg-white'}),
+            'location': forms.TextInput(attrs={'class': 'border rounded-md p-2 w-full mb-3 bg-white'}),
+            'category': forms.Select(attrs={'class': 'border rounded-md p-2 w-full mb-3 bg-white'}),
         }
 
 class CategoryModelForm(forms.ModelForm):
@@ -22,8 +22,8 @@ class CategoryModelForm(forms.ModelForm):
         model = Category
         fields = ['name', 'description']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'border rounded-md p-2 w-full mb-3'}),
-            'description': forms.Textarea(attrs={'class': 'border rounded-md p-2 w-full mb-3', 'rows': 3}),
+            'name': forms.TextInput(attrs={'class': 'border rounded-md p-2 w-full bg-white mb-3'}),
+            'description': forms.Textarea(attrs={'class': 'border rounded-md p-2 w-full bg-white mb-3', 'rows': 3}),
         }
 class ParticipantForm(forms.ModelForm):
     events = forms.ModelMultipleChoiceField(

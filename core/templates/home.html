@@ -2,31 +2,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Freelancer Conference</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body class="bg-gray-100">
-   
-    {% if request.user.is_authenticated %}
-        {% include "logged_nav.html" %}
-    {% else %}
-        {% include "non_logged_nav.html" %}
-    {% endif %}
-    
-    <div>
-        <img src="{% static 'images/banner_event.png' %}" alt="">
+
+  <!-- Navbar -->
+  {% if request.user.is_authenticated %}
+    {% include "logged_nav.html" %}
+  {% else %}
+    {% include "non_logged_nav.html" %}
+  {% endif %}
+
+  <!-- Hero Section -->
+  <div class="relative h-[500px] w-full overflow-hidden">
+    <img src="{% static 'images/header.jpg' %}" alt="Conference Background"
+         class="absolute inset-0 w-full h-full object-cover z-0" />
+    <div class="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+    <div class="relative z-20 h-full flex flex-col items-center justify-center text-white text-center px-4">
+      <p class="text-lg md:text-xl">25 APRIL, 2015 / TOWNHALL CALIFORNIA</p>
+      <h1 class="text-3xl md:text-5xl font-bold mt-2">FREELANCER CONFERENCE 2015</h1>
+      <p class="text-base md:text-lg mt-2">FIRST & LARGEST CONFERENCE</p>
+      <button class="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg shadow hover:bg-gray-200 transition">
+        REGISTER NOW
+      </button>
     </div>
-   {% include 'footer.html' %}
-<script>
+  </div>
+
+  <!-- About + Goal Section -->
+  <section class="bg-white py-16 px-6 md:px-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div>
+        <h2 class="text-2xl font-bold mb-4 uppercase text-gray-600">About Us</h2>
+        <p class="text-gray-700 leading-relaxed">
+          You've inspired new consumer, racked up click-thru's, blown-up brand enes. 
+          We can't give you back the weekends you worked, or erase the pain of being 
+          forced to make the logo bigger. But if you submit your best work, we just 
+          might give you the chance to show your best digital marketing.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold mb-4 uppercase text-gray-600">Our Goal</h2>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          Helping creators, freelancers, and marketers learn from industry experts 
+          and grow their impact in the digital space.
+        </p>
+        <ul class="space-y-3 text-gray-800 font-semibold">
+          <li>› Learn from top Asian Social Media Experts</li>
+          <li>› Get 1-to-1 meetings with mentors</li>
+          <li>› Reach more consumers with digital media skills</li>
+          <li>› Save money on online advertising</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+   <section class="relative bg-center bg-cover py-16" style="background-image: url('{% static 'images/auditorium.jpg' %}');">
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      
+      <!-- Box 1 -->
+      <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-md p-6 text-white hover:bg-opacity-20 transition transform hover:-translate-y-2 hover:shadow-xl">
+        <div class="text-5xl mb-3">📅</div>
+        <p class="text-xl font-bold">2015</p>
+        <p class="text-sm opacity-90">June 25</p>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-md p-6 text-white hover:bg-opacity-20 transition transform hover:-translate-y-2 hover:shadow-xl">
+        <div class="text-5xl mb-3">📍</div>
+        <p class="text-xl font-bold">California</p>
+        <p class="text-sm opacity-90">USA</p>
+      </div>
+
+      <!-- Box 3 -->
+      <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-md p-6 text-white hover:bg-opacity-20 transition transform hover:-translate-y-2 hover:shadow-xl">
+        <div class="text-5xl mb-3">🏷️</div>
+        <p class="text-xl font-bold">150</p>
+        <p class="text-sm opacity-90">Tickets</p>
+      </div>
+
+      <!-- Box 4 -->
+      <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-md p-6 text-white hover:bg-opacity-20 transition transform hover:-translate-y-2 hover:shadow-xl">
+        <div class="text-5xl mb-3">📢</div>
+        <p class="text-xl font-bold">06</p>
+        <p class="text-sm opacity-90">Speakers</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- <section class="relative h-72 bg-center bg-cover" style="background-image: url('{% static 'images/auditorium.jpg' %}');">
+    <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+    <div class="relative z-10 h-full flex items-center justify-center">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-white text-center px-4">
+        <div>
+          <div class="text-4xl mb-2">📅</div>
+          <p class="text-lg font-semibold">2015<br>June 25</p>
+        </div>
+        <div>
+          <div class="text-4xl mb-2">📍</div>
+          <p class="text-lg font-semibold">California<br>USA</p>
+        </div>
+        <div>
+          <div class="text-4xl mb-2">🏷️</div>
+          <p class="text-lg font-semibold">150<br>Tickets</p>
+        </div>
+        <div>
+          <div class="text-4xl mb-2">📢</div>
+          <p class="text-lg font-semibold">06<br>Speakers</p>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Card Section -->
+   <div class="felx justify-between"></div>
+  <section class="py-16 px-6 md:px-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition">
+        <a href="#">
+          <img class="rounded-t-lg w-full h-48 object-cover" src="{% static 'images/header.jpg' %}" alt="" />
+        </a>
+        <div class="p-5">
+          <h5 class="mb-2 text-xl font-bold text-gray-900">Noteworthy technology acquisitions 2021</h5>
+          <p class="mb-4 text-gray-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+            Read more
+            <svg class="w-3.5 h-3.5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+           <div class="bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition">
+        <a href="#">
+          <img class="rounded-t-lg w-full h-48 object-cover" src="{% static 'images/header.jpg' %}" alt="" />
+        </a>
+        <div class="p-5">
+          <h5 class="mb-2 text-xl font-bold text-gray-900">Noteworthy technology acquisitions 2021</h5>
+          <p class="mb-4 text-gray-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+            Read more
+            <svg class="w-3.5 h-3.5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+           <div class="bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition">
+        <a href="#">
+          <img class="rounded-t-lg w-full h-48 object-cover" src="{% static 'images/header.jpg' %}" alt="" />
+        </a>
+        <div class="p-5">
+          <h5 class="mb-2 text-xl font-bold text-gray-900">Noteworthy technology acquisitions 2021</h5>
+          <p class="mb-4 text-gray-700">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+            Read more
+            <svg class="w-3.5 h-3.5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+  <!-- Mobile Menu Toggle -->
+  <script>
     const menuBtn = document.getElementById("menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
-    menuBtn.addEventListener("click",()=>{
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
-    })
-</script>
+      });
+    }
+  </script>
 
-    
 </body>
 </html>

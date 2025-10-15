@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,4 +44,57 @@
         <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
     </div>
 </body>
-</html>
+</html> -->
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+
+    <!-- Login Card -->
+    <div class="w-1/2 max-w-md bg-white/10 backdrop-blur-md shadow-2xl rounded-2xl p-8" style="padding: 25px;">
+        
+        <!-- Heading -->
+        <h1 class="text-3xl font-bold text-center text-white mb-6">Welcome Back 👋</h1>
+        <p class="text-center text-gray-200 mb-6">Sign in to continue</p>
+
+        <!-- Form -->
+        <form action="" method="POST" class="space-y-5">
+            {% csrf_token %}
+            {% for field in form %}
+            <div>
+                <label for="{{field.id_for_label}}" class="block text-gray-100 font-medium mb-1">
+                    {{field.label}}
+                </label>
+                <div class="relative">
+                    {{ field }}
+                </div>
+
+                {% if field.errors %}
+                <div class="text-red-400 text-sm mt-1">
+                    <ul class="list-disc list-inside">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Button -->
+            <button type="submit" 
+                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg transition transform hover:scale-[1.02]">
+                Sign In
+            </button>
+            <h2 class="text-white px-3 py-2"><a href="{% url 'register' %}">Create a new account</a></h2>
+
+            <!-- Links -->
+            <div class="flex justify-between items-center text-sm text-gray-200
