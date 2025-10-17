@@ -3,7 +3,8 @@ from users.forms import CustomRegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,authenticate,logout
 from users.forms import EditProfileForm,loginForm,AssignROleForm,CreateGroup,PasswordChangeView,CustomPasswordResetConfirmForm,CustomPasswordChangeForm,CustomPasswordResetForm
-from core.views import home
+from core.views import home_event_data
+
 
 # from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
