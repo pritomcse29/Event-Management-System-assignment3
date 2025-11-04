@@ -25,7 +25,7 @@
   <h1 class="text-2xl font-bold text-gray-800 mb-3 md:mb-0">
     📊 Organizer Dashboard
   </h1>
-  <form method="GET" action="{% url 'event-details' %}" class="flex items-center gap-2">
+  <form method="GET" action="{% url 'event-details' %}" class="flex items-center gap-4">
     <input type="text" name="q" value="{{ search_query }}" placeholder="Search Events..."
            class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-red-400 w-60">
     <button type="submit"
@@ -87,8 +87,8 @@
 </div>
 
 <!-- ✅ All Events Section -->
-<div class="max-w-5xl mx-auto mt-12 bg-white shadow-2xl rounded-2xl p-6 border border-gray-100">
-  <h2 class="text-xl font-semibold bg-gradient-to-r from-red-500 to-red-400 text-white py-3 px-4 rounded-lg shadow mb-6 text-center">
+<div class="max-w-5xl mx-auto mt-12 bg-white shadow-2xl rounded-2xl p-6 border border-gray-100 mt-5">
+  <h2 class="text-xl font-semibold bg-gradient-to-r from-red-500 to-red-400 text-gray-800 py-3 px-4 rounded-lg shadow mb-6 text-center">
     📅 All Events Listing
   </h2>
 
@@ -131,9 +131,9 @@
 
 
 <!-- ✅ Today's Events -->
-<div class="max-w-6xl mx-auto mt-16 bg-white shadow-2xl rounded-2xl p-8 border border-gray-100">
+<div class="max-w-6xl mx-auto mt-16 bg-white shadow-2xl rounded-2xl p-8 border border-gray-100 mt-5">
   <div class="flex justify-between items-center mb-8">
-    <h2 class="text-xl font-semibold bg-gradient-to-r from-red-500 to-red-400 text-white py-2 px-4 rounded-lg shadow">
+    <h2 class="text-xl font-semibold bg-gradient-to-r from-red-500 to-red-400 text-gray-800 py-2 px-4 rounded-lg shadow">
       🌟 Today's Events
     </h2>
   </div>

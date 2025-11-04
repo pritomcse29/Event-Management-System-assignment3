@@ -26,7 +26,8 @@
       <h1 class="text-3xl md:text-5xl font-bold mt-2">FREELANCER CONFERENCE 2015</h1>
       <p class="text-base md:text-lg mt-2">FIRST & LARGEST CONFERENCE</p>
       <button class="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg shadow hover:bg-gray-200 transition">
-        REGISTER NOW
+        <a href="{% url 'register' %}">REGISTER NOW</a>
+        
       </button>
     </div>
   </div>
@@ -283,10 +284,10 @@
           <img src="{% static 'images/party.png' %}" alt="{{ event.name }}" class="h-48 w-full object-cover">
         </figure>
         <div class="card-body text-center">
-          <h2 class="card-title text-black">{{ event.name }}</h2>
+          <h2 class="card-title text-black mt-3">{{ event.name }}</h2>
           <p class="text-gray-600"><strong>🕒</strong> {{ event.time }}</p>
           <p class="text-gray-600"><strong>📍</strong> {{ event.location }}</p>
-          <div class="card-actions justify-center mt-3">
+          <div class="card-actions justify-center mt-3 mb-3">
             <a href="{% url 'detail-page' event.id %}">
               <button class="btn btn-primary btn-sm">View Details</button>
             </a>

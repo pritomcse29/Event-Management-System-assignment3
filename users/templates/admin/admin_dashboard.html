@@ -120,7 +120,7 @@
 
             <!-- Desktop Menu -->
             <ul class="hidden md:flex space-x-8 font-medium">
-                <li><a href="{% url 'admin-dashboard' %}" class="hover:text-yellow-300 transition-colors duration-300">Dashboard</a></li>
+                <!-- <li><a href="{% url 'admin-dashboard' %}" class="hover:text-yellow-300 transition-colors duration-300">Dashboard</a></li> -->
                 <li><a href="{% url 'create-group' %}" class="hover:text-yellow-300 transition-colors duration-300">Create Group</a></li>
                 <li><a href="{% url 'view-group' %}" class="hover:text-yellow-300 transition-colors duration-300">Groups</a></li>
             </ul>
@@ -183,7 +183,9 @@
         {% include 'admin/user_list.html' %}
         
     </main>
-
+<div class="mt-5">
+    {% include 'footer.html' %}
+</div>
     <!-- Script -->
     <script>
         const menuBtn = document.getElementById("menu-btn");

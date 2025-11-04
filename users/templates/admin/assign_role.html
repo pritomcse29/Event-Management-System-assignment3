@@ -120,7 +120,7 @@
     </main> -->
 
     <!-- Main Content -->
-<main class="max-w-3xl mx-auto py-10 px-6">
+<main class="flex justify-center items-center max-h-screen py-16">
   
   <!-- Messages -->
   {% if messages %}
@@ -159,7 +159,7 @@
       </div>
       
       <button type="submit"
-              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl shadow transition-all duration-300">
+              class="w-full bg-indigo-600 hover:bg-indigo-700  text-white font-medium py-2.5 px-4 rounded-xl shadow transition-all duration-300">
         Submit
       </button>
     </form>
@@ -167,6 +167,9 @@
 
 </main>
  
+<div>
+    {% include 'footer.html' %}
+</div>
 
     <!-- Script -->
     <script>

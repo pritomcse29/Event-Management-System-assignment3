@@ -4,15 +4,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ event.name }} | Event Management System</title>
+  <title>Event Management System</title>
   <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <script src="https://kit.fontawesome.com/1c433b5b8c.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans min-h-screen flex flex-col">
+<body class="bg-slate-100 text-gray-900 font-sans">
 
-  <!-- 🌐 Navbar -->
-  {% include 'dashboard/navigation_bar.html' %}
+  <!-- 🌐 Mobile Navbar -->
+  <nav class="md:hidden bg-white shadow-lg py-4 px-5 rounded-b-2xl">
+    <div class="flex justify-between items-center">
+      <h2 class="font-bold text-lg text-indigo-600 tracking-wide">Event Management</h2>
+      <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden flex flex-col mt-4 space-y-3">
+      <!-- <a href="{% url 'admin-dashboard' %}" class="hover:bg-indigo-50 px-4 py-2 rounded-lg hover:text-indigo-600 transition">Admin Dashboard</a>
+      <a href="{% url 'organizer-dashboard' %}" class="hover:bg-indigo-50 px-4 py-2 rounded-lg hover:text-indigo-600 transition">Dashboard</a> -->
+      <a href="{% url 'dashboard' %}" class="hover:text-indigo-600 transition-all duration-200">Dashboard</a>
+      <a href="{% url 'create-event' %}" class="hover:bg-indigo-50 px-4 py-2 rounded-lg hover:text-indigo-600 transition">Add Events</a>
+      <a href="{% url 'create-category' %}" class="hover:bg-indigo-50 px-4 py-2 rounded-lg hover:text-indigo-600 transition">Add Categories</a>
+      <a href="{% url 'profile' %}" class="hover:bg-indigo-50 px-4 py-2 rounded-lg hover:text-indigo-600 transition">Profile</a>
+
+      <form method="post" action="{% url 'sign-out' %}" class="px-4">
+        {% csrf_token %}
+        <button class="w-full text-left text-red-600 hover:text-red-700 py-2 font-medium">Logout</button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- 💻 Desktop Navbar -->
+  <nav class="hidden md:flex bg-white shadow-lg py-4 px-10 rounded-b-3xl border-b border-gray-100" style="padding: 15px;">
+    <div class="container mx-auto flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-indigo-600 tracking-wide">Event Management System</h2>
+
+      <div class="flex items-center space-x-8 text-gray-800 font-medium">
+        <!-- <a href="{% url 'admin-dashboard' %}" class="hover:text-indigo-600 transition-all duration-200">Admin Dashboard</a> -->
+        <a href="{% url 'dashboard' %}" class="hover:text-indigo-600 transition-all duration-200">Dashboard</a>
+        <!-- <a href="{% url 'organizer-dashboard' %}" class="hover:text-indigo-600 transition-all duration-200">Dashboard</a> -->
+        <a href="{% url 'create-event' %}" class="hover:text-indigo-600 transition-all duration-200">Add Events</a>
+        <a href="{% url 'create-category' %}" class="hover:text-indigo-600 transition-all duration-200">Add Categories</a>
+        <a href="{% url 'profile' %}" class="hover:text-indigo-600 transition-all duration-200">Profile</a>
+
+        <form method="post" action="{% url 'sign-out' %}">
+          {% csrf_token %}
+          <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow transition-all duration-300">
+            Logout
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
 
   <!-- 🎟️ Hero Section -->
   <section class="relative h-72 w-full flex items-center justify-center mb-10">
@@ -77,6 +122,14 @@
   <footer class="mt-16">
     {% include 'footer.html' %}
   </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    if(menuToggle){
+      menuToggle.addEventListener("click", ()=> mobileMenu.classList.toggle("hidden"));
+    }
+  </script>
 
 </body>
 </html>
